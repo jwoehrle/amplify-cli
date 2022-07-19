@@ -16,6 +16,13 @@ describe('packageManager tests', () => {
       .toThrowError(`The provided root path ${testDirectory} does not exist.`);
   });
 
+  test('accept undefined rootPath without error', () => {
+    const mockCwd = jest.spyOn(process, 'cwd').mockImplementation(() => '/');
+    const packageManager = getPackageManager();
+    expect(mockCwd).toHaveBeenCalled();
+    expect(packageManager).toBeNull();
+  });
+
   test('returns null when no package.json found', () => {
     const testDirectory = path.join(baseDirectory, 'packageManager-null');
 

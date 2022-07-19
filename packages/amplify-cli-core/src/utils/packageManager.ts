@@ -47,11 +47,12 @@ const packageManagers: Record<string, PackageManager> = {
 
  */
 export const getPackageManager = (rootPath?: string): PackageManager | null => {
-  const effectiveRootPath = rootPath ?? process.cwd();
 
-  if (!fs.existsSync(effectiveRootPath)) {
+  if (rootPath && !fs.existsSync(rootPath)) {
     throw new Error(`The provided root path ${rootPath} does not exist.`);
   }
+
+  const effectiveRootPath = rootPath ?? process.cwd();
 
   // eslint-disable-next-line spellcheck/spell-checker
   const checkExecutable = (executable: string): string | null => which.sync(executable, { nothrow: true });
